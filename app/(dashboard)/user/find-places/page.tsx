@@ -1,10 +1,12 @@
+import {findLocations} from "./actions";
 
 
-export default function FindPlaces({searchParams}:{
+export default async function FindPlaces({searchParams}:{
     searchParams: {
-        query: string,
+        query?: string,
     }
 }) {
+    const locations = await findLocations(searchParams.query || "");
 
 
     return <>
