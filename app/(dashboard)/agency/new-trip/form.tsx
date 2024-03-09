@@ -8,45 +8,30 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
-import { LocationType, LocationTypeWithId } from "src/models/location";
+import { TripType, TripTypeWithId } from "src/models/trip";
 
 import toast from "react-hot-toast";
 
 interface Props {
-    addLocation: (location:LocationType) => Promise<LocationTypeWithId>
+    newTrip: (trip: TripType) => Promise<TripTypeWithId>
 }
 
 
-export default function Form({addLocation}:Props) {
-    const [name, setName] = useState("");
-    const [assets, setAssets] = useState<{
-        type: "image" | "video",
-        src: string
-    }[]>([]);
-    const [asset, setAsset] = useState<{
-        type: "image" | "video",
-        src: string
-    }>({
-        type: "image",
-        src: ""
-    })
+export default function Form({ newTrip }: Props) {
+    const [from, setFrom] = useState("");
+    const [to, setTo] = useState("");
+    const [startedAt, setStartedAt] = useState("");
+    const [endedAt, setEndedAt] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState<string[]>([]);
-    const [nearest_location, setApproxLocation] = useState("");
-    const [location, setLocation] = useState({
-        lat: 0,
-        long: 0
-    });
+
+
+
+
+
 
 
 
@@ -55,185 +40,96 @@ export default function Form({addLocation}:Props) {
         <CardContent className="grid gap-3">
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label htmlFor="location_name">
-                    Location Name
+                    Starting From
                 </Label>
-                <Input type="text" id="location_name" placeholder="Enter a location name you want to add"
-                    onChange={(e) => {
-                        setName(e.target.value)
-                    }}
-                    value={name}
+                <Input type="text"
+                    id="from"
+                    value={from}
+                    onChange={(e) => setFrom(e.target.value)}
+                    placeholder="Starting From"
                 />
             </div>
-            <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="location_assets">
-                    Location Images / Videos
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="location_name">
+                    Going To
                 </Label>
-                <div className="flex gap-2 flex-wrap">
-                    <Select
-                        value={asset.type}
-                        onValueChange={(value:"image" | "video") => {
-                            setAsset({
-                                ...asset,
-                                type: value
-                            })
-                        }}
-                    >
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="image">Image</SelectItem>
-                            <SelectItem value="video">Video</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <Input type="text" id="location_name" placeholder="Enter a location name you want to add"
-                        onChange={(e) => {
-                            setAsset({
-                                ...asset,
-                                src: e.target.value
-                            })
-                        }}
-                        value={asset.src}
-                    />
-                    <Button
-                    disabled={asset.src === ""}
-                        onClick={() => {
-                            if (asset.src === "") return;
-                            if(assets.length > 3) return;
-                            setAssets([...assets, asset])
-                            setAsset({
-                                type: "image",
-                                src: ""
-                            })
-                        }}
-                    >
-                        Add
-                    </Button>
-
-                </div>
-
-                <div className="flex items-stretch justify-start gap-4 w-full">
-                    {assets.map((asset, index) => {
-                        if (asset.type === "video") {
-                            return <video key={index} src={asset.src}
-                                className="w-full h-48 object-cover rounded-md basis-1 md:basis-1/2 xl:basis-1/3 2xl:basis-1/4"
-                            />
-                        }
-                        else if (asset.type === "image")
-                            return <img key={index} src={asset.src}
-                                className="w-full h-48 object-cover rounded-md basis-1 md:basis-1/2 xl:basis-1/3 2xl:basis-1/4"
-                            />
-                    })}
-                </div>
+                <Input type="text"
+                    id="to"
+                    placeholder="Going To"
+                    value={to}
+                    onChange={(e) => setTo(e.target.value)}
+                />
             </div>
-            <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="location_description">
-                    Location Description
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="location_name">
+                    Start Date
                 </Label>
-                <Textarea id="location_description"
-                    rows={5}
-                    placeholder="Enter a location description"
-                    onChange={(e) => {
-                        setDescription(e.target.value)
-                    }}
+                <Input type="date"
+                    id="startedAt"
+                    value={startedAt}
+                    onChange={(e) => setStartedAt(e.target.value)}
+                />
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="location_name">
+                    End Date
+                </Label>
+                <Input type="date"
+                    id="endedAt"
+                    value={endedAt}
+                    onChange={(e) => setEndedAt(e.target.value)}
+                />
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="location_name">
+                    Description
+                </Label>
+                <Textarea
+                    id="description"
+                    placeholder="Description of the trip"
                     value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="location_tags">
-                    Location Tags
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="location_name">
+                    Tags
                 </Label>
-                <Input id="location_tags" type="text" placeholder="Enter a location tags"
-                    onChange={(e) => {
-                        setTags(e.target.value.split(","))
-                    }}
+                <Input type="text"
+                    id="tags"
+                    placeholder="Tags (comma separated)"
                     value={tags.join(",")}
+                    onChange={(e) => setTags(e.target.value.split(","))}
                 />
             </div>
-            <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="location_nearest_location">
-                    Location Approximate Location
-                </Label>
-                <Input id="location_nearest_location" type="text" placeholder="Enter a location approximate location"
-                    onChange={(e) => {
-                        setApproxLocation(e.target.value)
-                    }}
-                    value={nearest_location}
-                />
-            </div>
-            <div className="grid w-full items-center gap-1.5">
-                <div className="flex justify-between items-center">
 
-                    <Label htmlFor="location_lat">
-                        Set Location Latitude
-                    </Label>
-                    <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
 
-                            navigator.geolocation.getCurrentPosition((position) => {
-                                console.log(position);
-                                setLocation({
-                                    lat: position.coords.latitude,
-                                    long: position.coords.longitude
-                                });
-                            });
-                        }}
-                    >
-                        Use Current Location
-                    </Button>
-                </div>
-                <div className="flex justify-between items-center gap-2">
-
-                    <Input id="location_lat" type="number" placeholder="Enter a location latitude"
-                        onChange={(e) => {
-                            setLocation({
-                                ...location,
-                                lat: parseFloat(e.target.value)
-                            })
-                        }}
-                        value={location.lat}
-                    />
-                    <Input id="location_long" type="number" placeholder="Enter a location longitude"
-
-                        onChange={(e) => {
-                            setLocation({
-                                ...location,
-                                long: parseFloat(e.target.value)
-                            })
-                        }}
-                        value={location.long}
-                    />
-
-                </div>
-
-            </div>
             <Button
-            disabled={name === "" || assets.length === 0 || description === "" || tags.length === 0 || nearest_location === "" || location.lat === 0 || location.long === 0}
-            onClick={() => {
-                if(name === "" || assets.length === 0 || description === "" || tags.length === 0 || nearest_location === "" || location.lat === 0 || location.long === 0) 
-                {
-                toast.error("Please fill all the fields");
-                return;
-                }
+            disabled={from === "" || to === "" || startedAt === "" || endedAt === "" || description === "" || tags.length === 0}
 
-                
-                toast.promise(addLocation({
-                    name,
-                    assets,
-                    description,
-                    tags,
-                    nearest_location,
-                    location
-                }), {
-                    loading: "Adding location...",
-                    success: "Location added successfully",
-                    error: "Failed to add location"
-                })
-            
-            }}>
+                onClick={() => {
+                    if (from === "" || to === "" || startedAt === "" || endedAt === "" || description === "" || tags.length === 0) {
+                        toast.error("All fields are required")
+                        return
+                    }
+                    toast.promise(newTrip({
+                        from,
+                        to,
+                        startedAt,
+                        endedAt,
+                        description,
+                        tags,
+                        travellers: [],
+                        seats: 0
+                    }), {
+                        loading: "Creating Trip",
+                        success: "Trip Created",
+                        error: "Failed to create trip"
+                    
+                    })
+
+
+                }}>
                 Save Changes
             </Button>
 

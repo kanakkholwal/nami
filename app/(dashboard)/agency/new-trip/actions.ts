@@ -3,16 +3,16 @@ import { authOptions } from "app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import dbConnect from "src/lib/dbConnect";
-import Location, { LocationType, LocationTypeWithId } from "src/models/location";
 import { sessionType } from "src/types/session";
 
+import Trip, { TripType, TripTypeWithId } from "src/models/trip";
 
-export async function addLocation(newLocation:LocationType) : Promise<LocationTypeWithId> {
+export async function newTrip(new_trip:TripType) : Promise<TripTypeWithId> {
     const session = await getServerSession(authOptions) as sessionType;
     await dbConnect();
-    const location = new Location(newLocation);
-    location.creator = session.user._id;
-    await location.save();
-    revalidatePath("/guide");
-    return JSON.parse(JSON.stringify(location));
+    const trip = new Trip(new_trip);
+    trip.creator = session.user._id;
+    await trip.save();
+    revalidatePath("/agency");
+    return JSON.parse(JSON.stringify(trip));
 }

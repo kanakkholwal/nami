@@ -6,7 +6,7 @@ import {
     CardTitle
 } from "@/components/ui/card";
 
-import { addLocation } from "./actions";
+import { newTrip } from "./actions";
 import Form from "./form";
 
 
@@ -18,14 +18,14 @@ export default async function GuideDashboard() {
         <Card variant="glass">
             <CardHeader>
                 <CardTitle>
-                    Add a locations
+                    Add a new trip
                 </CardTitle>
                 <CardDescription>
-                    Add a location to the guide
+                    Add a new trip to your agency
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Form addLocation={addLocation}/>
+                <Form newTrip={newTrip}/>
             </CardContent>
         </Card>
 
