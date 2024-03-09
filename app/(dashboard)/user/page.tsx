@@ -5,21 +5,24 @@ import Link from "next/link";
 export default function UserDashboard() {
 
 
-    return <div>
+    return <div className="space-y-4">
         <h1>User Dashboard</h1>
 
         <p>Here is the user dashboard</p>
 
-        <Button asChild>
-            <Link href="/user/find-places">
-                Find new Places
-            </Link>
-        </Button>
-        <Button asChild>
-            <Link href="/user/find-trips">
-                Find new Trips
-            </Link>
-        </Button>
+        <div className="flex gap-2">
+
+            <Button asChild>
+                <Link href="/user/find-places">
+                    Find new Places
+                </Link>
+            </Button>
+            <Button asChild>
+                <Link href="/user/find-trips">
+                    Find new Trips
+                </Link>
+            </Button>
+        </div>
 
     </div>
 }

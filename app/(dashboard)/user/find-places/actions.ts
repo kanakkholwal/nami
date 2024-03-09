@@ -9,7 +9,7 @@ export async function findLocations(query:string) : Promise<LocationTypeWithId[]
     const filterQuery = {
         $or: [
             { "name": { $regex: query, $options: "i" } },
-            { "description": { $regex: query, $options: "i" } },
+            // { "description": { $regex: query, $options: "i" } },
             {
                 tags: {
                     $elemMatch: {
