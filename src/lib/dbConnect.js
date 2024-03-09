@@ -10,7 +10,6 @@ if (!MONGODB_URI) {
         'Please define the MONGODB_URI environment variable'
     )
 }
-let newVersion = false;
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
@@ -23,7 +22,7 @@ if (!cached) {
     cached = global.mongoose = { conn: null, promise: null }
 }
 
-async function dbConnect(db = "main") {
+async function dbConnect() {
     if (cached.conn) {
         return cached.conn
     }
