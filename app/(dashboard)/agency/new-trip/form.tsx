@@ -27,6 +27,7 @@ export default function Form({ newTrip }: Props) {
     const [endedAt, setEndedAt] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState<string[]>([]);
+    const [seats, setSeats] = useState(5);
 
 
 
@@ -102,6 +103,18 @@ export default function Form({ newTrip }: Props) {
                     onChange={(e) => setTags(e.target.value.split(","))}
                 />
             </div>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="seats">
+                    Seats
+                </Label>
+                <Input type="text"
+                    id="seats"
+                    placeholder="Seats"
+                    value={seats.toString()}
+                    onChange={(e) => setSeats(parseInt(e.target.value))}
+
+                />
+            </div>
 
 
             <Button
@@ -120,7 +133,7 @@ export default function Form({ newTrip }: Props) {
                         description,
                         tags,
                         travellers: [],
-                        seats: 0
+                        seats
                     }), {
                         loading: "Creating Trip",
                         success: "Trip Created",

@@ -1,7 +1,6 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import Image from "next/image";
 import Link from "next/link";
 import { BiSupport } from "react-icons/bi";
 import { Provider, ThemeProvider } from "./client-provider";
@@ -41,9 +40,8 @@ export default function GlobalError({
                     <Provider>
                         <div className="min-h-screen w-full relative overflow-hidden">
                             <nav className="flex justify-between items-center w-full py-3 px-4 md:px-6">
-                                <Link href="/" aria-label="logo" className="p-1.5">
-                                    <span className="sr-only">Nexonauts</span>
-                                    <Image height={40} width={280} className="h-12 dark:invert w-auto" src="/assets/logo.svg" alt="logo" />
+                                <Link href="/" aria-label="logo" className="p-1.5 text-xl font-semibold ">
+                                    Nami 
                                 </Link>
 
                                 <Link href="/contact" className="flex items-center gap-2 text-slate-700 dark:text-slate-400 hover:underline text-base">
