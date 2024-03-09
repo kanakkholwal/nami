@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { BiLockOpenAlt } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
-import { FiGithub } from "react-icons/fi";
 import { LuMail } from "react-icons/lu";
 
 import {
@@ -125,12 +124,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     return (
         <div className={cn("grid gap-6 lg:max-w-lg text-left", className)} {...props}>
-            <div className='grid gap-2 grid-cols-2'>
+            <div className='flex w-full'>
                 <Button variant="outline" type="button" disabled={isLoading}
-                    className='border-slate-200 shadow-sm border hover:border-primary/50 border-solid dark:bg-slate-800 dark:border-slate-700 dark:hover:border-primary/50 dark:hover:bg-slate-900 dark:text-slate-200'
+                    className='w-full border-slate-200 shadow-sm border hover:border-primary/50 border-solid dark:bg-slate-800 dark:border-slate-700 dark:hover:border-primary/50 dark:hover:bg-slate-900 dark:text-slate-200'
                     onClick={async () => {
                         setIsLoading(true);
-                        await signIn('google', { callbackUrl: "/dashboard" })
+                        await signIn('google', { callbackUrl: "/feed" })
                         setIsLoading(false);
 
                     }}            >
@@ -138,20 +137,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         <AiOutlineLoading className="h-6 w-6 animate-spin" />
                     ) : (
                         <FcGoogle className=" h-6 w-6" />
-                    )}
-                </Button>
-                <Button variant="outline" type="button" disabled={isLoading}  
-                    className='border-slate-200 shadow-sm border hover:border-primary/50 border-solid dark:bg-slate-800 dark:border-slate-700 dark:hover:border-primary/50 dark:hover:bg-slate-900 dark:text-slate-200'
-
-                    onClick={async () => {
-                        setIsLoading(true);
-                        await signIn('github', { callbackUrl: "/dashboard" })
-                        setIsLoading(false);
-                    }}   >
-                    {isLoading ? (
-                        <AiOutlineLoading className="h-6 w-6 animate-spin" />
-                        ) : (
-                        <FiGithub className="h-6 w-6" />
                     )}
                 </Button>
             </div>

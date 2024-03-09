@@ -18,7 +18,7 @@ type SessionUserType = {
     username: string;
     email: string;
     role: string;
-    profilePicture: URL | string;
+    profilePicture: string;
     account_type: string;
     verificationToken: string|null;
     verified: boolean;

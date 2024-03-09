@@ -2,10 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-// import { FaApple } from "react-icons/fa";
+
 import { CgSpinner } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 import { LuCheckCircle2 } from "react-icons/lu";
@@ -13,15 +14,14 @@ import { RiErrorWarningLine } from "react-icons/ri";
 
 interface Props {
     validateEmail: (email: string) => Promise<boolean>,
-    validateUsername: (username: string) => Promise<boolean>,
 }
-const INVALID_CHARACTERS = [" ", "-", "@", "#", "%", "^", "!", "~", "*", "(", ")", "=", "+", ".", ">", ",", "<", "?", `"`, `'`, "{", "}", "[", "]", "|", "$", ":", ";", "&"]
 
-export function RegisterForm({ validateEmail, validateUsername }: Props) {
+
+export function RegisterForm({ validateEmail }: Props) {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+
     const [password, setPassword] = useState("");
     const [validity, setValidity] = useState({
         email: {
@@ -55,7 +55,6 @@ export function RegisterForm({ validateEmail, validateUsername }: Props) {
                     body: JSON.stringify({
                         name,
                         email,
-                        username,
                         password,
                     }),
                 });
@@ -111,40 +110,7 @@ export function RegisterForm({ validateEmail, validateUsername }: Props) {
                     </span>
                 </div>
             </div>
-            <div className="grid w-full max-w-lg items-center gap-1.5">
-                <Label htmlFor="password">Enter your username</Label>
-                <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 font-regular text-gray-500 dark:text-gray-500">
-                        nexonauts.com/devs/
-                    </span>
-                    <Input type="text" id="username"
-                        pattern="^[a-zA-Z0-9_]" 
-                        value={username} onChange={(e) => {
-                            // prevent invalid characters 
-
-                            setUsername(e.target.value
-                                .split('')
-                                .filter(char => !INVALID_CHARACTERS.includes(char))
-                                .join('').trim());
-                            if (username.length > 3) {
-                                validateUsername(username)
-                                    .then((valid: boolean) => {
-                                        setValidity({ ...validity, username: { ...validity.username, loading: false, valid: valid } })
-                                    }).catch(() => {
-                                        setValidity({ ...validity, username: { ...validity.username, loading: false, valid: false } })
-                                    })
-                            }
-
-
-                        }}
-                        placeholder="username" className="pl-[11.25rem] pr-10" />
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3">
-                        {validity.username.loading ? <CgSpinner className="animate-spin h-5 w-5" /> :
-                            validity.username.valid ? <LuCheckCircle2 className="h-5 w-5 text-green-500" /> : validity.username.valid === false ? <RiErrorWarningLine className="h-5 w-5 text-red-500" /> : null}
-
-                    </span>
-                </div>
-            </div>
+        
             <div className="grid w-full max-w-lg items-center gap-1.5">
                 <Label htmlFor="password">Enter your password</Label>
                 <div className="relative">
@@ -194,28 +160,35 @@ export function RegisterForm({ validateEmail, validateUsername }: Props) {
                     OR SIGN UP WITH
                 </p>
                 <div className="w-full max-w-lg flex flex-col gap-3">
-                    <Button variant="outline" size="lg" className="w-full rounded-full">
+                    <Button variant="outline" size="lg" className="w-full rounded-full"
+                    onClick={(e) =>{
+                        e.preventDefault();
+                        toast.promise(signIn("google",{
+                            callbackUrl: "/feed"
+                        }),{
+                            loading: "Redirecting...",
+                            success: (data) => {
+                                return <> 
+                                Redirecting...
+                                </>
+                            },
+                            error: (err) => {
+                                return <>{err.message}</>
+                            }
+                        })
+                    }}
+                    >
                         {loading ? <CgSpinner className="animate-spin mr-2 h-5 w-5" /> : <FcGoogle className="mr-2 h-6 w-6" />}
 
                         Sign up with Google
                     </Button>
-                    {/* <Button className="rounded-full ease-linear duration-300 text-base font-medium text-slate-100 bg-slate-700 hover:bg-slate-800 shadow-lg" size="lg">
-                <FaApple className="mr-2 h-6 w-6" />
-                Sign up with Apple
-              </Button> */}
                 </div>
                 <div className="flex justify-center mt-8">
                     <p className="text-concrete">Already have an account ?&nbsp;</p>
                     <Link className=" text-primary inline-flex hover:underline"
                         href="/login" data-testid="login_redirect">Log in</Link>
                 </div>
-                <p className="text-concrete text-xs lg:text-sm pt-8">By clicking <span className="font-semibold">Create account / Sign up</span>, you agree to {process.env.NEXT_PUBLIC_WEBSITE_NAME}'s {" "}
-                    <Link className="!text-concrete text-primary inline-flex hover:underline"
-                        href={process.env.NEXT_PUBLIC_WEBSITE_URL + "/tos"}>Terms</Link> {" "}
-                    and confirm you have read our <Link className="!text-concrete text-primary inline-flex hover:underline"
-                        href={process.env.NEXT_PUBLIC_WEBSITE_URL + "/privacy"}>Privacy Policy</Link>.
-                    You may receive offers, news and updates from us.
-                </p>
+
             </div>
         </>}
         {state === "registered" && <>

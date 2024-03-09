@@ -1,6 +1,5 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "src/lib/dbConnect";
 import UserModel from "src/models/user";
@@ -9,8 +8,6 @@ import { SessionUserType } from "src/types/user";
 interface AuthEnv {
     GOOGLE_ID: string;
     GOOGLE_SECRET: string;
-    GITHUB_ID: string;
-    GITHUB_SECRET: string;
     NEXT_AUTH_SECRET: string;
     NEXTAUTH_URL: string;
 }
@@ -23,8 +20,6 @@ const env: AuthEnv = {
     GOOGLE_SECRET: process.env.GOOGLE_SECRET || "",
     NEXT_AUTH_SECRET: process.env.NEXT_AUTH_SECRET || "",
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || "",
-    GITHUB_ID: process.env.GITHUB_ID || "",
-    GITHUB_SECRET: process.env.GITHUB_SECRET || "",
 };
 
 // Check if all required environment variables are defined
@@ -43,19 +38,19 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
     secret: env.NEXT_AUTH_SECRET,
-    cookies: {
-        sessionToken: {
-            name: `${useSecureCookies ? "__Secure-" : ""}next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: useSecureCookies,
-                domain: hostName == 'localhost' ? hostName : '.' + "nexonauts.com" // add a . in front so that subdomains are included
+    // cookies: {
+    //     sessionToken: {
+    //         name: `${useSecureCookies ? "__Secure-" : ""}next-auth.session-token`,
+    //         options: {
+    //             httpOnly: true,
+    //             sameSite: 'lax',
+    //             path: '/',
+    //             secure: useSecureCookies,
+    //             domain: hostName == 'localhost' ? hostName : '.' + "straw-hat.crew" // add a . in front so that subdomains are included
 
-            }
-        },
-    },
+    //         }
+    //     },
+    // },
 
     // Here we add our login providers - this is where you could add Google or Github SSO as well
     providers: [
@@ -203,45 +198,6 @@ export const authOptions: NextAuthOptions = {
 
 
             },
-        }),
-        GithubProvider({
-            clientId: env.GITHUB_ID,
-            clientSecret: env.GITHUB_SECRET,
-            authorization: {
-                params: { scope: "read:user user:email" },
-            },
-            async profile(profile) {
-                console.log(profile);
-                const gotUser = {
-                    name: profile.name,
-                    email: profile.email,
-                    profilePicture: profile.avatar_url,
-                    password: "github" + profile.id,
-                    username: profile.login,
-                    role: "user",
-                    account_type: "free",
-                    verificationToken: null,
-                    verified: true,
-                    providers: ["github"],
-                    additional_info: {},
-                }
-                await dbConnect();
-                const isUser = await UserModel.findOne({ email: profile.email })
-                if (isUser) {
-                    await UserModel.updateOne({ _id: isUser._id }, {
-                        $set: {
-                            profilePicture: profile.avatar_url,
-                            verified: true,
-                            providers: [...isUser.providers, "github"]
-                        }
-                    })
-
-                    return Promise.resolve(isUser)
-                }
-                const user = new UserModel(gotUser);
-                await user.save();
-                return Promise.resolve(user);
-            },
         })
     ],
     // All of this is just to add user information to be accessible for our app in the token/session
@@ -263,7 +219,6 @@ export const authOptions: NextAuthOptions = {
                     role: user.role || "user",
                     verified: user.verified || false,
                     providers: user.providers,
-                    additional_info: user.additional_info,
                 }
             }
             return token

@@ -7,9 +7,8 @@ import {
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { ChevronLeftCircle, ChevronRightCircle, LogOut, Rss, Settings2, UserRoundCog } from 'lucide-react';
+import { ChevronLeftCircle, ChevronRightCircle, LogOut, Rss } from 'lucide-react';
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useState } from "react";
@@ -23,25 +22,20 @@ export type sideLinkType = {
 
 const user_links: sideLinkType[] = [
     {
-        label: "Feed",
+        label: "Guide",
         icon: Rss,
-        href: "/feed",
-    },
-    // {
-    //     label: "Tools",
-    //     icon: Swords,
-    //     href: "/dashboard/tools",
-    // },
-    {
-        label: "Account",
-        icon: UserRoundCog,
-        href: "/dashboard/settings/account",
+        href: "/guide",
     },
     {
-        label: "Settings",
-        icon: Settings2,
-        href: "/dashboard/settings",
-    }
+        label: "Agency",
+        icon: Rss,
+        href: "/agency",
+    },
+    {
+        label: "User",
+        icon: Rss,
+        href: "/user",
+    },
 ];
 
 
@@ -62,7 +56,9 @@ export default function SideBar({ user }: { user: SessionUserType }) {
             {open ? <ChevronLeftCircle className="w-4 h-4" /> : <ChevronRightCircle className="w-4 h-4" />}
         </button>
         <div className="flex items-center justify-between px-6 py-2">
-            <Image height={120} width={300} className="h-14 w-14 dark:invert" src="/logo-square-with-bg.svg" alt="logo" />
+            <Link href="/" className="flex items-center gap-2">
+                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-200">Straw Hat Crew</h1>
+            </Link>
         </div>
         <div className="flex-1 px-6">
             <h6 className="mb-2 ml-2 font-semibold text-xs text-slate-500 dark:text-slate-400 uppercase">
@@ -87,9 +83,7 @@ export function SidenavFooter({ user }: { user: SessionUserType }) {
         <div className="flex flex-col items-start justify-start">
             <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{user.name}</h3>
             <p className="text-xs text-slate-600 dark:text-slate-300">
-                <Link href={"/devs/" + user.username} target="_blank">
-                    @{user.username}
-                </Link>
+                    {user.email}
             </p>
         </div>
         <Button variant="destructive_light" size="icon" className='rounded-full ml-auto' onClick={(e) => { e.preventDefault(); signOut({ callbackUrl: "/login" }) }}>

@@ -36,22 +36,6 @@ export default async function Page() {
             }
         })
     }
-    const validateUsername = async (username: string): Promise<boolean> => {
-        "use server";
-        return new Promise(async (resolve, reject) => {
-            if (cache.has(username as string)) {
-                return resolve(cache.get(username) as boolean)
-            }
-            const existingUser = await User.findOne({ username: username.toLowerCase() });
-            if (existingUser) {
-                cache.set(username, false);
-                return resolve(false);
-            } else {
-                cache.set(username, true);
-                return resolve(true);
-            }
-        })
-    }
     return (
         <>
 
@@ -65,7 +49,7 @@ export default async function Page() {
             </header>
             <main className="flex flex-col items-center justify-center w-full p-4 space-y-4">
 
-            <RegisterForm validateEmail={validateEmail} validateUsername={validateUsername} />
+            <RegisterForm validateEmail={validateEmail}  />
 
             </main>
 

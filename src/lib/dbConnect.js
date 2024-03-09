@@ -32,7 +32,7 @@ async function dbConnect() {
             
         }
         mongoose.set('strictQuery', false);
-        cached.promise = mongoose.connect(MONGODB_URI  + "testing?retryWrites=true&w=majority", opts).then(mongoose => {
+        cached.promise = mongoose.connect(MONGODB_URI  + "nami_testing?retryWrites=true&w=majority", opts).then(mongoose => {
             console.log("Connected to MongoDB");
             return mongoose
         }).catch(error => console.log(error));
