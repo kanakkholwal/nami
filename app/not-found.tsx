@@ -1,5 +1,5 @@
 import { ErrorActions } from "app/layouts/error-layout";
-import Footer from 'app/layouts/footer';
+
 import Navbar from "app/layouts/navbar";
 
 import { Metadata } from "next";
@@ -9,7 +9,7 @@ import { Suspense } from 'react';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-    title: "Not Found | Nexoauts",
+    title: "Not Found",
     description: "The page you are looking for does not exist.",
 }
 
@@ -51,6 +51,5 @@ export default async function NotFound() {
                 <ErrorActions />
             </Suspense>
         </div>
-        <Footer/>
     </div>
 }

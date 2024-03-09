@@ -1,24 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import { TypewriterEffectSmooth } from "src/components/animations/typewriter-effect";
 
 export default function HeroLayout() {
-	const words = [
-		{
-			text: "Supercharge",
-		},
-		{
-			text: "Development ",
-		},
-		{
-			text: "with ",
-		},
-		{
-			text: "Nexonauts.",
-			className: "text-blue-500 dark:text-blue-500",
-		},
-	];
+
 
 	return (
 		<div className="relative" id="hero">
@@ -41,23 +26,15 @@ export default function HeroLayout() {
 				</div>
 				<div className="mx-auto pt-32 sm:pt-48 lg:pt-56">
 					<div className="hidden sm:mb-8 sm:flex sm:justify-center">
-						{/* <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 bg-white/10 dark:text-gray-300">
-							Case study
-							{`  `}
-							<a href="#" className="font-semibold text-primary">
-								<span className="absolute inset-0" aria-hidden="true" />
-								Read more <span aria-hidden="true">&rarr;</span>
-							</a>
-						</div> */}
+	
 					</div>
 					<div className="text-center">
 						<p className="mt-6 text-base leading-8 text-gray-600 dark:text-gray-400">
-							Elevate Your Development Journey Today.
+						Have your most immersive travel experience with
 						</p>
-						{/* <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-							Develop with Confidence {`\n`} Innovate with Ease
-						</h1> */}
-						<TypewriterEffectSmooth words={words} />
+						<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+							Straw Hat Crew
+						</h1>
 
 						<div className="mt-10 flex items-center justify-center flex-wrap  gap-6">
 							<Button
@@ -68,16 +45,6 @@ export default function HeroLayout() {
 									Sign Up Now
 								</Link>
 							</Button>
-							{/* <Button
-								size="lg"
-								variant="outline"
-								className='rounded-full relative flex h-12 w-full items-center justify-center px-6 sm:w-max shadow shadow-accent'
-								asChild>
-								<Link href="/login">
-									Login
-									<ExternalLink className="w-5 h-5 ml-2" />
-								</Link>
-							</Button> */}
 						</div>
 						<div className="mt-56 flex items-center justify-center">
 							<Button
@@ -107,43 +74,3 @@ export default function HeroLayout() {
 		</div>
 	);
 }
-
-{/* <div className="lg:w-3/4 text-center mx-auto"> */ }
-{/* <h1 className=" font-bold text-5xl md:text-6xl xl:text-7xl relative bg-clip-text text-transparent bg-gradient-to-r from-primary to-violet-300  dark:from-sky-600 dark:to-purple-300">
-							Develop with Confidence {`\n`} Innovate with Ease
-							<span className="relative bg-gradient-to-r from-primary to-violet-200 bg-clip-text text-transparent dark:from-primaryLight dark:to-secondaryLight md:px-2">reimagination.</span>
-						</h1> */}
-{/* <p className="mt-8 font-medium text-base text-gray-700 dark:text-gray-300">
-							Build your next big thing with the best tools and resources available. Our platform is designed to help you create, innovate, and grow your developer experience.
-							Welcome to our developer-centric platform, which is designed to help you create amazing digital products and services.
-						</p> */}
-{/* <div className="mt-16 flex flex-wrap justify-center gap-y-4 gap-x-6">
-							<Link href="/signup" className="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
-								<span className="relative text-base font-semibold text-white">Get started</span>
-							</Link>
-							<Link href="#" className="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
-								<span className="relative text-base font-semibold text-primary dark:text-white">Learn more</span>
-							</Link>
-						</div> */}
-
-{/* </div> */ }
-{/* <div className="mt-12  grid-cols-3 sm:grid-cols-4 md:grid-cols-6 hidden">
-						<div className="p-4 grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/microsoft.svg" className="h-12 w-auto mx-auto" loading="lazy" alt="client logo" />
-						</div>
-						<div className="p-4 grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/airbnb.svg" className="h-12 w-auto mx-auto" loading="lazy" alt="client logo" />
-						</div>
-						<div className="p-4 flex grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/google.svg" className="h-9 w-auto m-auto" loading="lazy" alt="client logo" />
-						</div>
-						<div className="p-4 grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/ge.svg" className="h-12 w-auto mx-auto" loading="lazy" alt="client logo" />
-						</div>
-						<div className="p-4 flex grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/netflix.svg" className="h-8 w-auto m-auto" loading="lazy" alt="client logo" />
-						</div>
-						<div className="p-4 grayscale transition duration-200 hover:grayscale-0">
-							<img src="./images/clients/google-cloud.svg" className="h-12 w-auto mx-auto" loading="lazy" alt="client logo" />
-						</div>
-					</div> */}
