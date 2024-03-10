@@ -52,7 +52,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams?.get('redirect') || "/feed";
+    const callbackUrl = searchParams?.get('redirect') || "/user";
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const form = useForm<z.infer<typeof FormSchema>>({

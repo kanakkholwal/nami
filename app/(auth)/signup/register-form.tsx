@@ -164,7 +164,7 @@ export function RegisterForm({ validateEmail }: Props) {
                     onClick={(e) =>{
                         e.preventDefault();
                         toast.promise(signIn("google",{
-                            callbackUrl: "/feed"
+                            callbackUrl: "/user"
                         }),{
                             loading: "Redirecting...",
                             success: (data) => {
