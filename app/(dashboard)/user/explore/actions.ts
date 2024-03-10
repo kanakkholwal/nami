@@ -19,7 +19,7 @@ export async function getMedia(location:{
                 }
             }
         })
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: 1 })
         .select('media_type media_url tags title location')
         .limit(20)
         .exec();
