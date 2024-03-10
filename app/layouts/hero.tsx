@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HeroLayout() {
@@ -46,17 +45,7 @@ export default function HeroLayout() {
 								</Link>
 							</Button>
 						</div>
-						<div className="mt-56 flex items-center justify-center">
-							<Button
-								size="icon"
-								variant="outline"
-								className='rounded-full relative flex h-12 items-center justify-center w-max bg-transparent animate-moveVertical'
-								asChild>
-								<Link href="#solutions">
-									<ChevronDown className="w-6 h-6" />
-								</Link>
-							</Button>
-						</div>
+						
 					</div>
 				</div>
 				<div
