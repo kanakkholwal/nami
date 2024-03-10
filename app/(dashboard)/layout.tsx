@@ -13,7 +13,7 @@ export const metadata :Metadata = {
 export default async function FeedLayout({ children }: { children: React.ReactNode }) {
     const session = await getServerSession(authOptions);
     console.log(session)
-    if (!(session && session.user)) return redirect("/login?redirect=/feed")
+    if (!(session && session.user)) return redirect("/login?redirect=/user")
 
     return (<>
         <div className="flex h-full min-h-screen selection:bg-primary/10 selection:text-primary dark:bg-gray-800/80 bg-slate-200/80 z-0">

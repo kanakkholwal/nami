@@ -32,7 +32,7 @@ export default function HeroLayout() {
 						Have your most immersive travel experience with
 						</p>
 						<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-							Straw Hat Crew
+							Projet Nami
 						</h1>
 
 						<div className="mt-10 flex items-center justify-center flex-wrap  gap-6">

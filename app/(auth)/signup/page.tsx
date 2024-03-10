@@ -17,7 +17,7 @@ const cache = new Map<string, boolean>();
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    if (session) return redirect("/feed")
+    if (session) return redirect("/user")
     await dbConnect();
 
     const validateEmail = async (email: string): Promise<boolean> => {
