@@ -59,14 +59,13 @@ export default function SearchBar({ getMedia }: Props) {
         }}>
             {loading ? "Searching":"Explore Now"}
         </Button>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex items-center flex-wrap gap-2 w-full">
             {media.map((item, index) => {
                 return <div key={index} className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
                     <div>{item.title}</div>
                     <img className="w-full h-56 object-cover object-center" src={item.media_url} alt={item.title} />
                     <div className="p-4">
                             <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{item.name}</h3>
-                        Uploaded on {new Date(item.createdAt).toDateString()}
                     </div>
                 </div>
             })}
