@@ -36,6 +36,11 @@ const user_links: sideLinkType[] = [
         icon: Rss,
         href: "/user",
     },
+    {
+        label: "Add media",
+        icon: Rss,
+        href: "/add-media",
+    },
 ];
 
 

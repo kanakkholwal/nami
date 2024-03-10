@@ -2,11 +2,11 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 
 
 export type MediaType = {
+    title: string,
+    description: string,
 
     media_type: string,
     media_url: string,
-    title: string,
-    description: string,
     tags: string[],
     nearest_location:string,
     location:{
